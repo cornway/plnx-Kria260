@@ -1,0 +1,22 @@
+/include/ "system-conf.dtsi"
+/ {
+	reserved-memory {
+		#address-cells = <2>;
+		#size-cells = <2>;
+		ranges;
+		image_buf0: image_buf@0 {
+			compatible = "shared-dma-pool";
+			reusable;
+			reg = <0x00000000 0x70000000 0x0 0x04000000>;
+			label = "pl_ps_shared_buf0";
+		};
+	};
+	udmabuf@0 {
+		compatible = "ikwzm,u-dma-buf";
+		device-name = "udmabuf0";
+		size = <0x04000000>; // 64MiB
+		sync-mode = <1>;
+		sync-always;
+		memory-region = <&image_buf0>;
+	};
+};
